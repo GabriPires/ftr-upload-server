@@ -19,11 +19,13 @@ export const uploadImageRoute: FastifyPluginAsyncZod = async server => {
       },
     },
     async (request, reply) => {
-      await db.insert(schema.uploads).values({
-        name: 'teste.jpg',
-        remoteKey: 'teste.jpg',
-        remoteUrl: 'https://example.com/teste.jpg',
+      const uploadedFile = await request.file({
+        limits: {
+          fileSize: 1024 * 1024 * 2, // 2MB
+        },
       })
+
+      console.log(uploadedFile)
 
       return reply.status(201).send({ uploadId: '123' })
     }
