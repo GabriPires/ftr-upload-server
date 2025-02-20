@@ -38,10 +38,6 @@ export async function exportUploads(
 
   const cursor = pg.unsafe(sql, params as string[]).cursor(50)
 
-  // for await (const rows of cursor) {
-  //   console.log(rows)
-  // }
-
   const csv = stringify({
     delimiter: ',',
     header: true,
@@ -80,8 +76,6 @@ export async function exportUploads(
   const [{ url }] = await Promise.all([uploadToStorage, convertToCSVPipeline])
 
   await convertToCSVPipeline
-
-  // console.log(url)
 
   return makeRight({ reportUrl: url })
 }
