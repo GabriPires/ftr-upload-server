@@ -1,5 +1,3 @@
-# check=skip=SecretsUsedInArgOrEnv
-
 FROM node:20.18 AS base
 
 RUN npm i -g pnpm
