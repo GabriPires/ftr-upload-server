@@ -29,7 +29,10 @@ jobs:
 
       - name: Build and push the image to AWS ECR
         id: build-and-push
+        env:
+          ECR_REGISTRY: ${{ steps.ecr-login.outputs.registry }}
+          ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY }}
         run: |
           docker build -t widget-server:v3 .
-          docker tag widget-server:v3 533266973714.dkr.ecr.us-east-2.amazonaws.com/ftr/widget-server:v3
-          docker push 533266973714.dkr.ecr.us-east-2.amazonaws.com/ftr/widget-server:v3
+          docker tag widget-server:v3 $ECR_REGISTRY/$ECR_REPOSITORY:v3
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:v3
